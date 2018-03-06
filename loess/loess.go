@@ -6,7 +6,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-var totalErr = errors.New("Total <= 0")
+var errTotal = errors.New("Total <= 0")
 
 // WeightUpdate is a function that modifies the State.
 type WeightUpdate func(s *State, x, left, right float64) error
@@ -39,8 +39,13 @@ func NewWithExternal(width int, x, e []float64) *State {
 	}
 }
 
+// W returns the weights in the state
 func (s State) W() []float64 { return s.w }
+
+// X returns the Xs in the state.
 func (s State) X() []float64 { return s.x }
+
+// W returns the externally defined weights in the state.
 func (s State) E() []float64 { return s.e }
 
 // Regress performs local regression of x between left and right
@@ -228,7 +233,7 @@ func (s *State) localWeights(x, left, right float64) error {
 	}
 
 	if sum <= 0 {
-		return totalErr
+		return errTotal
 	}
 
 	// normalize weights

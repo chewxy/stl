@@ -1,3 +1,6 @@
+// Package stl implements functions and data structures necessary to perform a Seasonal-Trend decomposition by LOESS, as described by Cleveland et al. (1990).
+//
+// This library's code was ported over from the original  Netlib library which was written in Fortran '77.
 package stl
 
 import (

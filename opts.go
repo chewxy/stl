@@ -63,7 +63,7 @@ func DefaultSeasonal(width int) Config {
 	}
 }
 
-// DefaulTrend returns the default configuration for the operation that works on the trend component.
+// DefaultTrend returns the default configuration for the operation that works on the trend component.
 func DefaultTrend(periodicity, width int) Config {
 	return Config{
 		Width: trendWidth(periodicity, width),
@@ -72,7 +72,7 @@ func DefaultTrend(periodicity, width int) Config {
 	}
 }
 
-// DefaultLowpass returns the default configuration for the operation that works on the lowpass component.
+// DefaultLowPass returns the default configuration for the operation that works on the lowpass component.
 func DefaultLowPass(periodicity int) Config {
 	return Config{
 		Width: periodicity,

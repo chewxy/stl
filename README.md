@@ -1,4 +1,4 @@
-#stl [![GoDoc](https://godoc.org/github.com/chewxy/stl?status.svg)](https://godoc.org/github.com/chewxy/stl) [![Build Status](https://travis-ci.org/chewxy/stl.svg?branch=master)](https://travis-ci.org/chewxy/stl) [![Coverage Status](https://coveralls.io/repos/github/chewxy/stl/badge.png)](https://coveralls.io/github/chewxy/stl) [![Go Report Card](https://goreportcard.com/badge/github.com/chewxy/stl)](https://goreportcard.com/report/github.com/chewxy/stl)#
+# stl [![GoDoc](https://godoc.org/github.com/chewxy/stl?status.svg)](https://godoc.org/github.com/chewxy/stl) [![Build Status](https://travis-ci.org/chewxy/stl.svg?branch=master)](https://travis-ci.org/chewxy/stl) [![Coverage Status](https://coveralls.io/repos/github/chewxy/stl/badge.png)](https://coveralls.io/github/chewxy/stl) [![Go Report Card](https://goreportcard.com/badge/github.com/chewxy/stl)](https://goreportcard.com/report/github.com/chewxy/stl) #
 
 `package stl` implements Seasonal-Trend Decompositions by LOESS of time series. It is a direct implementation of [Cleveland et al (1990)](https://search.proquest.com/openview/cc5001e8a0978a6c029ae9a41af00f21/1?pq-origsite=gscholar&cbl=105444), which was written in Fortran '77. 
 
@@ -8,7 +8,7 @@ There were some parts that were "inlined" and unrolled manually for performance 
 
 Additionally, because multiplicative models are common in time series decompositions, [Box-Cox transform](https://en.wikipedia.org/wiki/Power_transform#Box%E2%80%93Cox_transformation) functions (and generator) have also been provided.
 
-#Installation #
+# Installation #
 
 This package has very minimal dependencies. These are the listing of the dependencies:
 

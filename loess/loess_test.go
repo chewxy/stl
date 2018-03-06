@@ -72,7 +72,7 @@ func TestSmooth(t *testing.T) {
 	}
 }
 
-func Example_Smooth() {
+func Example_smooth() {
 	a := []float64{
 		5, 6.0, 2.0, 4.5, 5,
 		5, 6.5, 3.5, 4.0, 5,
@@ -102,7 +102,7 @@ func Example_Smooth() {
 
 }
 
-func Example_ExternalWeights() {
+func Example_externalWeights() {
 	a := []float64{
 		5, 6.0, 2.0, 4.5, 5,
 		5, 6.5, 3.5, 4.0, 5,
