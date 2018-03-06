@@ -19,9 +19,14 @@ This package has very minimal dependencies. These are the listing of the depende
 
 # Usage #
 
-```
+```golang
+import (
+	"encoding/csv"
+	"os"
+	"fmt"
 
-import "github.com/chewxy/stl"
+	"github.com/chewxy/stl"
+)
 
 func main() {
 	var data []float64
@@ -35,7 +40,9 @@ func main() {
 			data = append(data, co2)
 		}
 	}
-	res := check(stl.Decompose(data, 12, 35, stl.Additive(), stl.WithRobustIter(2), stl.WithIter(2)))
+
+	// The main function: 
+	res := stl.Decompose(data, 12, 35, stl.Additive(), stl.WithRobustIter(2), stl.WithIter(2))
 	fmt.Printf("%v", res.Seasonal)
 	fmt.Printf("%v", res.Trens)
 	fmt.Printf("%v", res.Resid)
