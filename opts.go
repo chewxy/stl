@@ -1,6 +1,8 @@
 package stl
 
-import "github.com/chewxy/stl/loess"
+import (
+	"github.com/chewxy/stl/loess"
+)
 
 // Config is a configuration structure
 type Config struct {
@@ -56,27 +58,52 @@ func WithIter(n int) Opt {
 
 // DefaultSeasonal returns the default configuration for the operation that works on the seasonal component.
 func DefaultSeasonal(width int) Config {
+	if width <= 0 {
+		panic("Cannot use negative window width for seasonal smoothing.")
+	}
+	jmp := int(0.1 * float64(width))
+	if jmp <= 0 {
+		jmp = 1
+	}
 	return Config{
 		Width: width,
-		Jump:  int(0.1 * float64(width)),
+		Jump:  jmp,
 		Fn:    loess.Linear,
 	}
 }
 
 // DefaultTrend returns the default configuration for the operation that works on the trend component.
 func DefaultTrend(periodicity, width int) Config {
+	if periodicity <= 0 {
+		panic("Cannot use negative periodicity for trend smoothing.")
+	}
+	if width <= 0 {
+		panic("Cannot use negative window width for trend smoothing.")
+	}
+	jmp := int(0.1 * float64(width))
+	if jmp <= 0 {
+		jmp = 1
+	}
+
 	return Config{
 		Width: trendWidth(periodicity, width),
-		Jump:  int(0.1 * float64(width)),
+		Jump:  jmp,
 		Fn:    loess.Linear,
 	}
 }
 
 // DefaultLowPass returns the default configuration for the operation that works on the lowpass component.
 func DefaultLowPass(periodicity int) Config {
+	if periodicity <= 0 {
+		panic("Cannot use negative periodicity for low pass smoothing.")
+	}
+	jmp := int(0.1 * float64(periodicity))
+	if jmp <= 0 {
+		jmp = 1
+	}
 	return Config{
 		Width: periodicity,
-		Jump:  int(0.1 * float64(periodicity)),
+		Jump:  jmp,
 		Fn:    loess.Linear,
 	}
 }
@@ -86,5 +113,10 @@ func trendWidth(periodicity int, seasonalWidth int) int {
 	p := float64(periodicity)
 	w := float64(seasonalWidth)
 
-	return int(1.5*p/(1-1.5/w) + 0.5)
+	de := int(1.5*p/(1-1.5/w) + 0.5)
+
+	if de <= 0 {
+		panic("Default trend width calculation overflowed")
+	}
+	return de
 }

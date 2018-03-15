@@ -67,15 +67,21 @@ func Regress(s *State, fn WeightUpdate, x, left, right float64) (retVal float64,
 
 // Smooth smooths a slice of float64, with the provided width, jumps and update functions
 func Smooth(x []float64, width, jump int, fn WeightUpdate) ([]float64, error) {
+	if jump <= 0 {
+		return nil, errors.Errorf("Cannot work with jump == 0")
+	}
 	s := New(width, x)
 	retVal := make([]float64, len(x))
-	return smooth(s, width, jump, fn, retVal)
+	return smooth(s, width, jump, fn, retVal), nil
 }
 
 // UnsafeSmooth is like Smooth, except the state is passed in, as well as a optional return value to be mutated.
 func UnsafeSmooth(regression *State, width, jump int, fn WeightUpdate, retVal []float64) ([]float64, error) {
 	if regression.width != width {
 		return nil, errors.Errorf("Regression width: %d. Smoothing width %d", regression.width, width)
+	}
+	if jump <= 0 {
+		return nil, errors.Errorf("Cannot work with jump == 0")
 	}
 	if retVal == nil {
 		retVal = make([]float64, len(regression.x))
@@ -85,15 +91,15 @@ func UnsafeSmooth(regression *State, width, jump int, fn WeightUpdate, retVal []
 		return nil, errors.Errorf("Expected the preallocated value to have at least %d elements. Got %d elements.", len(regression.x), len(retVal))
 	}
 
-	return smooth(regression, width, jump, fn, retVal)
+	return smooth(regression, width, jump, fn, retVal), nil
 }
 
-func smooth(s *State, width, jump int, fn WeightUpdate, retVal []float64) ([]float64, error) {
+func smooth(s *State, width, jump int, fn WeightUpdate, retVal []float64) []float64 {
 	x := s.x
 	size := len(x)
 	if size == 1 {
 		retVal[0] = x[0]
-		return retVal, nil
+		return retVal
 	}
 
 	left, right := -1.0, -1.0
@@ -177,7 +183,7 @@ func smooth(s *State, width, jump int, fn WeightUpdate, retVal []float64) ([]flo
 			}
 		}
 	}
-	return retVal, nil
+	return retVal
 }
 
 // Local Weights perform local weight smoothing via the tricube function

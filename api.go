@@ -96,21 +96,19 @@ func Decompose(X []float64, periodicity, width int, m ModelType, opts ...Opt) Re
 		useResidualWeights = o > 0
 		for i := 0; i < s.innerIter; i++ {
 			s.doDetrend()
-
 			if err := s.smoothSubcycles(useResidualWeights); err != nil {
 				s.Err = errors.Wrapf(err, "Outer Iteration: %d, Inner Iteration %d - Failed to smooth subcycles", o, i)
 				return s.Result
 			}
-
 			if err := s.removeSeasonality(); err != nil {
 				s.Err = errors.Wrapf(err, "Outer Iteration: %d, Inner Iteration %d - Failed to remove seasonality", o, i)
 				return s.Result
 			}
-
 			if err := s.updateSeasonalAndTrend(useResidualWeights); err != nil {
 				s.Err = errors.Wrapf(err, "Outer Iteration: %d, Inner Iteration %d - Failed to update seasonal and trend", o, i)
 				return s.Result
 			}
+
 		}
 		s.updateWeights()
 	}
