@@ -18,10 +18,8 @@ env:
     - TRAVISTEST=true
 
 before_install:
-  - go get "github.com/chewxy/tightywhities"
-  - go get "gorgonia.org/tensor"
-  - go get "github.com/pkg/errors"
-  - go get "gorgonia.org/dawson"
+  - go get -u github.com/golang/dep/...
+  - dep ensure
   - go get github.com/mattn/goveralls
 
 script:
