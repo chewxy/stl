@@ -6,6 +6,7 @@ import (
 	"github.com/chewxy/stl/loess"
 	"github.com/pkg/errors"
 	"gorgonia.org/tensor"
+	"gorgonia.org/tensor/native"
 )
 
 type subcycleState struct {
@@ -66,7 +67,7 @@ func (s *subcycleState) setupWorkspace(X, weights []float64) {
 
 	var xxx [][][]float64
 	var err error
-	if xxx, err = tensor.Native3TensorF64(s.data); err != nil {
+	if xxx, err = native.Tensor3F64(s.data); err != nil {
 		panic(errors.Wrap(err, "setup workspace"))
 	}
 
@@ -87,10 +88,10 @@ func (s *subcycleState) setupWorkspace(X, weights []float64) {
 func (s *subcycleState) computeSmoothedSubSeries() (err error) {
 	var xxx [][][]float64
 	var xx [][]float64
-	if xxx, err = tensor.Native3TensorF64(s.data); err != nil {
+	if xxx, err = native.Tensor3F64(s.data); err != nil {
 		return errors.Wrap(err, "Compute Smoothed Series")
 	}
-	if xx, err = tensor.NativeMatrixF64(s.smoothed); err != nil {
+	if xx, err = native.MatrixF64(s.smoothed); err != nil {
 		return errors.Wrap(err, "Compute Smoothed Series")
 	}
 
