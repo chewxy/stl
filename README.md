@@ -15,7 +15,11 @@ This package has very minimal dependencies. These are the listing of the depende
 * [`gorgonia.org/tensor`](https://github.com/gorgonia/tensor) - used for storing the matrix data in the subcycle smoothing bits of the code
 * [`github.com/pkg/error`](https://github.com/pkg/error) - general errors management package
 * [`github.com/chewxy/tightywhities`](https://github.com/chewxy/tightywhities) - used in plotting ASCII charts in the examples/test.
-* [`gorgonia.org/dawson`](https://github.com/gorgonia/dawson) - used in tests to compare floating point numbers
+* [`gorgonia.org/dawson`](https://github.com/gorgonia/dawson) - used in tests to compare floating point numbers.
+
+This package uses `dep` to manage dependencies - in particular, at this point, it uses an unstable version of Gorgonia. This will be rectified upon the release of v0.9.0 of Gorgonia.
+
+Automated testing only tests up from Go 1.8 onwards. While I'm fairly confident that this package will work on those lower versions as well
 
 # Usage #
 
