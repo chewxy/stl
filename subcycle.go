@@ -76,7 +76,7 @@ func (s *subcycleState) setupWorkspace(X, weights []float64) {
 		if p < s.rem {
 			l = s.periodicity + 1
 		}
-		for i := 0; i < l; i++ {
+		for i := 0; i < l && i*s.periodicity+p < len(X); i++ {
 			xxx[0][p][i] = X[i*s.periodicity+p]
 			if len(weights) > 0 {
 				xxx[1][p][i] = weights[i*s.periodicity+p]
