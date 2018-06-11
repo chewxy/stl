@@ -26,14 +26,14 @@ type subcycleState struct {
 func newSubcycleState(conf Config, size, periodicity, fwd, bwd int) *subcycleState {
 	periods := size / periodicity
 	rem := size % periodicity
-	cycleLength := periods + 1
+	cycleLength := periodicity + 1
 	if rem == 0 {
-		cycleLength = periods
+		cycleLength = periodicity
 	}
 	smoothedLength := cycleLength + fwd + bwd
 	retVal := &subcycleState{
-		data:     tensor.New(tensor.WithShape(2, periodicity, cycleLength), tensor.Of(tensor.Float64), tensor.WithEngine(tensor.Float64Engine{})),
-		smoothed: tensor.New(tensor.WithShape(periodicity, smoothedLength), tensor.Of(tensor.Float64), tensor.WithEngine(tensor.Float64Engine{})),
+		data:     tensor.New(tensor.WithShape(2, periods, cycleLength), tensor.Of(tensor.Float64), tensor.WithEngine(tensor.Float64Engine{})),
+		smoothed: tensor.New(tensor.WithShape(periods, smoothedLength), tensor.Of(tensor.Float64), tensor.WithEngine(tensor.Float64Engine{})),
 
 		periodicity: periodicity,
 		periods:     periods,
@@ -71,10 +71,10 @@ func (s *subcycleState) setupWorkspace(X, weights []float64) {
 		panic(errors.Wrap(err, "setup workspace"))
 	}
 
-	for p := 0; p < s.periodicity; p++ {
-		l := s.periods
+	for p := 0; p < s.periods; p++ {
+		l := s.periodicity
 		if p < s.rem {
-			l = s.periods + 1
+			l = s.periodicity + 1
 		}
 		for i := 0; i < l; i++ {
 			xxx[0][p][i] = X[i*s.periodicity+p]
@@ -95,7 +95,7 @@ func (s *subcycleState) computeSmoothedSubSeries() (err error) {
 		return errors.Wrap(err, "Compute Smoothed Series")
 	}
 
-	periods := len(xxx[0])
+	periods := s.periods
 	for p := 0; p < periods; p++ {
 		data := xxx[0][p]
 		weights := xxx[1][p]
