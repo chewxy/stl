@@ -81,7 +81,7 @@ func Decompose(X []float64, periodicity, width int, m ModelType, opts ...Opt) Re
 	if periodicity < 2 {
 		return Result{Err: errors.Errorf("Periodicity must be greater than 2")}
 	}
-	if width < 1 {
+	if width <= 1 {
 		return Result{Err: errors.Errorf("Width must be greater than 1")}
 	}
 
